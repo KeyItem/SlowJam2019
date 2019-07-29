@@ -61,3 +61,5 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+
+Assets/Plugins/Editor\.meta~Fixed issues with Merge conflicts on Level 2, Seperate EntityController into 2 versions, mine and Phil so we dont get any conflicting issues\.
