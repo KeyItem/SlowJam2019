@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
             if (hitEntity.entityController != null)
             {
-                hitEntity.entityController.SpecialShrink(hitEntity.hitPoint);
+                hitEntity.entityController.ShrinkEntitySize(hitEntity.hitPoint);
             }
         }
         else if (CheckForEnlargeInteractionInput(input))
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
             if (hitEntity.entityController != null)
             {
-                hitEntity.entityController.EnlargeEntitySize();
+                hitEntity.entityController.EnlargeEntitySize(hitEntity.hitPoint);
             }
         }
     }

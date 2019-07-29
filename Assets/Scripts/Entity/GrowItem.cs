@@ -18,7 +18,7 @@ public class GrowItem : MonoBehaviour
         if (collider.gameObject.CompareTag("Entity"))
         {
             // Call grow function below
-            collider.gameObject.GetComponent<EntityController>().GrowFromItem();
+            collider.gameObject.GetComponent<EntityController_Phil>().GrowFromItem();
         }
             
         Destroy(gameObject);

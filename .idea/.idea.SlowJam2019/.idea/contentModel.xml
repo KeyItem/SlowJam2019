@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Repos\SlowJam2019" t="IncludeRecursive">
+    <e p="C:\Repo\SlowJam2019" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
@@ -144,9 +144,13 @@
           </e>
           <e p="Entity" t="Include">
             <e p="EntityController.cs" t="Include" />
+            <e p="EntityController_Phil.cs" t="Include" />
             <e p="GrowItem.cs" t="Include" />
+            <e p="Item2.cs" t="Include" />
+            <e p="ScoreScript.cs" t="Include" />
           </e>
           <e p="Obstacles" t="Include">
+            <e p="Elevator.cs" t="Include" />
             <e p="Platform.cs" t="Include" />
           </e>
           <e p="Player" t="Include">
@@ -160,16 +164,41 @@
             <e p="Zone.cs" t="Include" />
           </e>
         </e>
+        <e p="TextMesh Pro" t="Include">
+          <e p="Fonts" t="Include">
+            <e p="LiberationSans - OFL.txt" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+              <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+              <e p="TMP_Bitmap.shader" t="Include" />
+              <e p="TMP_SDF Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface.shader" t="Include" />
+              <e p="TMP_SDF.shader" t="Include" />
+              <e p="TMP_Sprite.shader" t="Include" />
+              <e p="TMPro.cginc" t="Include" />
+              <e p="TMPro_Properties.cginc" t="Include" />
+              <e p="TMPro_Surface.cginc" t="Include" />
+            </e>
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
       </e>
-      <e p="Library" t="ExcludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="SlowJam2019.sln" t="IncludeFlat" />
-      <e p="Temp" t="ExcludeRecursive">
-        <e p="bin" t="ExcludeRecursive" />
-      </e>
+      <e p="Temp\bin" t="ExcludeRecursive" />
     </e>
-    <e p="C:\Users\Matth\.Rider2018.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Matth\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_SlowJam2019.104808116.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Matth\.Rider2019.1\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Matth\.Rider2019.1\system\resharper-host\local\Transient\ReSharperHost\v191\SolutionCaches\_SlowJam2019.652029257.00" t="ExcludeRecursive" />
   </component>
 </project>
