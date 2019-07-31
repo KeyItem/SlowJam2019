@@ -40,7 +40,9 @@ public class EntityController : MonoBehaviour
 
         Vector3[] modifiedVertices = myMesh.vertices;
 
-        Vector3 meshCenter = myRigidbody.centerOfMass;
+        Vector3 meshCenter = transform.position;
+   
+        Debug.Log("Hit Object :: " + gameObject.name);
         
         for (int i = 0; i < modifiedVertices.Length; i++)
         {  
@@ -70,7 +72,9 @@ public class EntityController : MonoBehaviour
 
         Vector3[] modifiedVertices = myMesh.vertices;
 
-        Vector3 meshCenter = myRigidbody.centerOfMass;
+        Vector3 meshCenter = transform.position;
+   
+        Debug.Log("Hit Object :: " + gameObject.name);
         
         for (int i = 0; i < modifiedVertices.Length; i++)
         {  
