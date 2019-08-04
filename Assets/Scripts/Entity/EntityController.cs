@@ -5,7 +5,7 @@ using UnityEngine;
 public class EntityController : MonoBehaviour
 {
     [Header("Entity Size Settings")] 
-    public EntitySizeSettings sizeSettings;
+    public EntityInfo entityInfo;
     
     [Space(10)] 
     private CameraFollow cameraFollow;
@@ -14,7 +14,7 @@ public class EntityController : MonoBehaviour
     private MeshFilter entityMesh;
 
     [HideInInspector]
-    public Rigidbody myRigidbody;
+    public Rigidbody entityRigidbody;
     
     private void Awake()
     {
@@ -27,13 +27,17 @@ public class EntityController : MonoBehaviour
 
         entityMesh = GetComponent<MeshFilter>();
 
-        myRigidbody = GetComponent<Rigidbody>();
+        entityRigidbody = GetComponent<Rigidbody>();
 
         entityMeshCollider = GetComponent<MeshCollider>();
 
-        sizeSettings.entityBaseScale = transform.localScale;
+        entityInfo.resizingSettings.entityBaseScale = transform.localScale;
     }
-
+    public virtual void MoveEntity(Vector3 moveDirection, float effectiveness)
+    {
+        entityRigidbody.AddForce((entityInfo.movementSettings.entityMovementMultiplier * effectiveness) * Time.deltaTime * moveDirection, ForceMode.Impulse);
+    }
+    
     public virtual void SpecialShrink(Vector3 hitPoint)
     {
         Mesh myMesh = entityMesh.mesh;
@@ -51,11 +55,11 @@ public class EntityController : MonoBehaviour
 
             float distanceBetweenPoint = Vector3.Distance(hitPoint, worldMeshPoint);
 
-            if (distanceBetweenPoint < sizeSettings.modifyThreshold)
+            if (distanceBetweenPoint < entityInfo.resizingSettings.modifyThreshold)
             {
-                float distanceRatio = (sizeSettings.modifyThreshold - distanceBetweenPoint) / sizeSettings.modifyThreshold;
+                float distanceRatio = (entityInfo.resizingSettings.modifyThreshold - distanceBetweenPoint) / entityInfo.resizingSettings.modifyThreshold;
                 
-                modifiedVertices[i] += distanceRatio * sizeSettings.shrinkMultiplier * Time.deltaTime * interceptDirection;
+                modifiedVertices[i] += distanceRatio * entityInfo.resizingSettings.shrinkMultiplier * Time.deltaTime * interceptDirection;
             }
         }
 
@@ -83,11 +87,11 @@ public class EntityController : MonoBehaviour
 
             float distanceBetweenPoint = Vector3.Distance(hitPoint, worldMeshPoint);
 
-            if (distanceBetweenPoint < sizeSettings.modifyThreshold)
+            if (distanceBetweenPoint < entityInfo.resizingSettings.modifyThreshold)
             {
-                float distanceRatio = (sizeSettings.modifyThreshold - distanceBetweenPoint) / sizeSettings.modifyThreshold;
+                float distanceRatio = (entityInfo.resizingSettings.modifyThreshold - distanceBetweenPoint) / entityInfo.resizingSettings.modifyThreshold;
                 
-                modifiedVertices[i] += distanceRatio * sizeSettings.shrinkMultiplier * Time.deltaTime * interceptDirection;
+                modifiedVertices[i] += distanceRatio * entityInfo.resizingSettings.shrinkMultiplier * Time.deltaTime * interceptDirection;
             }
         }
 
@@ -98,16 +102,16 @@ public class EntityController : MonoBehaviour
         entityMeshCollider.sharedMesh = myMesh;
     }
     
-    public virtual void ShrinkEntitySize(Vector3 hitPoint)
+    public virtual void Shrink()
     {
-        if (sizeSettings.canBeShrinked)
+        if (entityInfo.resizingSettings.canBeShrinked)
         {
             Vector3 newSize = ReturnNewSize(SIZE_DIRECTION.SHRINK, transform.localScale);
-            newSize -= sizeSettings.shrinkMultiplier * Time.deltaTime * Vector3.one;
+            newSize -= entityInfo.resizingSettings.shrinkMultiplier * Time.deltaTime * Vector3.one;
                                    
-            if (newSize.sqrMagnitude < sizeSettings.minSize)
+            if (newSize.sqrMagnitude < entityInfo.resizingSettings.minSize)
             {
-                if (sizeSettings.isKilledAfterMinSize)
+                if (entityInfo.resizingSettings.isKilledAfterMinSize)
                 {
                     cameraFollow.RemoveTarget(transform);
                 
@@ -121,15 +125,15 @@ public class EntityController : MonoBehaviour
         }
     }
 
-    public virtual void EnlargeEntitySize(Vector3 hitPoint)
+    public virtual void Enlarge()
     {
-        if (sizeSettings.canBeEnlarged)
+        if (entityInfo.resizingSettings.canBeEnlarged)
         {
             Vector3 newSize = ReturnNewSize(SIZE_DIRECTION.ENLARGE, transform.localScale);
                             
-            if (newSize.sqrMagnitude > sizeSettings.maxSize)
+            if (newSize.sqrMagnitude > entityInfo.resizingSettings.maxSize)
             {
-                if (sizeSettings.isKilledAfterMaxSize)
+                if (entityInfo.resizingSettings.isKilledAfterMaxSize)
                 {
                     cameraFollow.RemoveTarget(transform);
                 
@@ -145,7 +149,7 @@ public class EntityController : MonoBehaviour
 
     public virtual void ResetEntitySize()
     {
-        transform.localScale = sizeSettings.entityBaseScale;
+        transform.localScale = entityInfo.resizingSettings.entityBaseScale;
     }
 
     private Vector3 ReturnNewSize(SIZE_DIRECTION sizeDirection, Vector3 baseSize)
@@ -155,38 +159,38 @@ public class EntityController : MonoBehaviour
 
         if (sizeDirection == SIZE_DIRECTION.SHRINK)
         {
-            sizeMultiplier = sizeSettings.shrinkMultiplier;
+            sizeMultiplier = entityInfo.resizingSettings.shrinkMultiplier;
 
-            if (sizeSettings.canXBeModified)
+            if (entityInfo.resizingSettings.canXBeModified)
             {
                 newSize.x -= 1f * sizeMultiplier * Time.deltaTime;
             }
 
-            if (sizeSettings.canYBeModified)
+            if (entityInfo.resizingSettings.canYBeModified)
             {
                 newSize.y -= 1f * sizeMultiplier * Time.deltaTime;
             }
 
-            if (sizeSettings.canZBeModified)
+            if (entityInfo.resizingSettings.canZBeModified)
             {
                 newSize.z -= 1f * sizeMultiplier * Time.deltaTime;
             }
         }
         else
         {
-            sizeMultiplier = sizeSettings.enlargeMultiplier;
+            sizeMultiplier = entityInfo.resizingSettings.enlargeMultiplier;
             
-            if (sizeSettings.canXBeModified)
+            if (entityInfo.resizingSettings.canXBeModified)
             {
                 newSize.x += 1 * sizeMultiplier * Time.deltaTime;
             }
 
-            if (sizeSettings.canYBeModified)
+            if (entityInfo.resizingSettings.canYBeModified)
             {
                 newSize.y += 1 * sizeMultiplier * Time.deltaTime;
             }
 
-            if (sizeSettings.canZBeModified)
+            if (entityInfo.resizingSettings.canZBeModified)
             {
                 newSize.z += 1 * sizeMultiplier * Time.deltaTime;
             }
@@ -194,10 +198,69 @@ public class EntityController : MonoBehaviour
 
         return newSize;
     }
+
+    public virtual bool CanMoveInDirection(Vector3 direction)
+    {
+        if (direction == Vector3.left)
+        {
+            if (entityInfo.movementSettings.canMoveLeft)
+            {
+                return true;
+            }
+        }
+        else if (direction == Vector3.right)
+        {
+            if (entityInfo.movementSettings.canMoveRight)
+            {
+                return true;
+            }
+        }
+        else if (direction == Vector3.up)
+        {
+            if (entityInfo.movementSettings.canMoveUp)
+            {
+                return true;
+            }
+        }
+        else if (direction == Vector3.down)
+        {
+            if (entityInfo.movementSettings.canMoveDown)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 
 [System.Serializable]
-public struct EntitySizeSettings
+public struct EntityInfo
+{
+    public string entityName;
+    
+    [Space(10)]
+    public EntityMovementSettings movementSettings;
+    
+    [Space(10)]
+    public EntityResizingSettings resizingSettings;
+}
+
+[System.Serializable]
+public struct EntityMovementSettings
+{
+    [Header("Entity Movement Settings")]
+    public float entityMovementMultiplier;
+
+    [Space(10)]
+    public bool canMoveUp;
+    public bool canMoveDown;
+    public bool canMoveLeft;
+    public bool canMoveRight;
+}
+
+[System.Serializable]
+public struct EntityResizingSettings
 {
     [Header("Entity Size Attributes")] 
     public Vector3 entityBaseScale;

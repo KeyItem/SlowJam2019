@@ -32,7 +32,7 @@ public class EntityController_Phil : EntityController
     {
         if (Input.GetKey("left"))
         {
-            myRigidbody.AddForce(Vector3.left *
+            entityRigidbody.AddForce(Vector3.left *
                                ((Input.GetKey("b")) ?
                                    boostStrength :
                                    jumpStrength)
@@ -41,7 +41,7 @@ public class EntityController_Phil : EntityController
 
         if (Input.GetKey("right"))
         {
-            myRigidbody.AddForce(Vector3.right *
+            entityRigidbody.AddForce(Vector3.right *
                                ((Input.GetKey("b")) ?
                                    boostStrength :
                                    jumpStrength)
@@ -50,7 +50,7 @@ public class EntityController_Phil : EntityController
 
         if (Input.GetKey("down"))
         {
-            myRigidbody.AddForce(Vector3.down *
+            entityRigidbody.AddForce(Vector3.down *
                                ((Input.GetKey("b")) ?
                                    boostStrength :
                                    jumpStrength)
@@ -88,7 +88,7 @@ public class EntityController_Phil : EntityController
         if (grounded)
         {
             grounded = false;
-            myRigidbody.AddForce(Vector3.up *
+            entityRigidbody.AddForce(Vector3.up *
                                ((Input.GetKey("b")) ?
                                    jumpBoostStrength :
                                    jumpStrength),
