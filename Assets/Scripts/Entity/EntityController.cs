@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityController : MonoBehaviour
 {
-    [Header("Entity Size Settings")] 
+    [Header("Entity Attributes")] 
     public EntityInfo entityInfo;
     
     [Space(10)] 
@@ -15,10 +16,18 @@ public class EntityController : MonoBehaviour
 
     [HideInInspector]
     public Rigidbody entityRigidbody;
-    
+
+    [Header("Entity Collision Attributes")]
+    public EntityCollisionInfo collisionInfo;
+
     private void Awake()
     {
         InitializeEntity();
+    }
+
+    private void Update()
+    {
+        ManageCollision();
     }
 
     private void InitializeEntity()
@@ -32,6 +41,18 @@ public class EntityController : MonoBehaviour
         entityMeshCollider = GetComponent<MeshCollider>();
 
         entityInfo.resizingSettings.entityBaseScale = transform.localScale;
+    }
+
+    public virtual void ManageCollision()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, entityInfo.collisionSettings.groundCheckRayLength, entityInfo.collisionSettings.groundCollisionMask))
+        {   
+            collisionInfo = new EntityCollisionInfo(true);
+        }
+        else
+        {
+            collisionInfo = new EntityCollisionInfo(false);
+        }
     }
     public virtual void MoveEntity(Vector3 moveDirection, float effectiveness)
     {
@@ -125,6 +146,29 @@ public class EntityController : MonoBehaviour
         }
     }
 
+    public virtual void ShrinkByPercentage(float newPercentage)
+    {
+        if (entityInfo.resizingSettings.canBeShrinked)
+        {
+            Vector3 newSize = ReturnNewSize(SIZE_DIRECTION.SHRINK, transform.localScale);
+            newSize -= entityInfo.resizingSettings.shrinkMultiplier * Time.deltaTime * Vector3.one;
+                                   
+            if (newSize.sqrMagnitude < entityInfo.resizingSettings.minSize)
+            {
+                if (entityInfo.resizingSettings.isKilledAfterMinSize)
+                {
+                    cameraFollow.RemoveTarget(transform);
+                
+                    Destroy(gameObject);
+                
+                    return;
+                }
+            }
+        
+            transform.localScale = newSize;
+        }
+    }
+
     public virtual void Enlarge()
     {
         if (entityInfo.resizingSettings.canBeEnlarged)
@@ -145,6 +189,11 @@ public class EntityController : MonoBehaviour
         
             transform.localScale = newSize;
         }
+    }
+
+    public virtual void EnlargeByPercentage(float newPercentage)
+    {
+
     }
 
     public virtual void ResetEntitySize()
@@ -199,38 +248,53 @@ public class EntityController : MonoBehaviour
         return newSize;
     }
 
+    private Vector3 ReturnNewSizeByPercent(SIZE_DIRECTION sizeDirection, float sizePercent, Vector3 baseSize)
+    {
+        return Vector3.zero;
+    }
+
     public virtual bool CanMoveInDirection(Vector3 direction)
     {
-        if (direction == Vector3.left)
+        if (collisionInfo.isGrounded)
         {
-            if (entityInfo.movementSettings.canMoveLeft)
+            if (direction == Vector3.left)
             {
-                return true;
+                if (entityInfo.movementSettings.canMoveLeft)
+                {
+                    return true;
+                }
             }
-        }
-        else if (direction == Vector3.right)
-        {
-            if (entityInfo.movementSettings.canMoveRight)
+            else if (direction == Vector3.right)
             {
-                return true;
+                if (entityInfo.movementSettings.canMoveRight)
+                {
+                    return true;
+                }
             }
-        }
-        else if (direction == Vector3.up)
-        {
-            if (entityInfo.movementSettings.canMoveUp)
+            else if (direction == Vector3.up)
             {
-                return true;
+                if (entityInfo.movementSettings.canMoveUp)
+                {
+                    return true;
+                }
             }
-        }
-        else if (direction == Vector3.down)
-        {
-            if (entityInfo.movementSettings.canMoveDown)
+            else if (direction == Vector3.down)
             {
-                return true;
+                if (entityInfo.movementSettings.canMoveDown)
+                {
+                    return true;
+                }
             }
         }
 
         return false;
+    }
+
+    public void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        
+        Gizmos.DrawRay(transform.position, Vector3.down * entityInfo.collisionSettings.groundCheckRayLength);
     }
 }
 
@@ -244,6 +308,9 @@ public struct EntityInfo
     
     [Space(10)]
     public EntityResizingSettings resizingSettings;
+    
+    [Space(10)]
+    public EntityCollisionSettings collisionSettings;
 }
 
 [System.Serializable]
@@ -288,6 +355,28 @@ public struct EntityResizingSettings
     [Space(10)] 
     public bool isKilledAfterMinSize;
     public bool isKilledAfterMaxSize;
+}
+
+[System.Serializable]
+public struct EntityCollisionSettings
+{
+    [Header("Entity Collision Settings")]
+    public float groundCheckRayLength;
+    
+    [Space(10)]
+    public LayerMask groundCollisionMask;
+}
+
+[System.Serializable]
+public struct EntityCollisionInfo
+{
+    [Header("Entity Collision Info")]
+    public bool isGrounded;
+
+    public EntityCollisionInfo(bool newIsGrounded)
+    {
+        this.isGrounded = newIsGrounded;
+    }
 }
 
 public enum SIZE_DIRECTION

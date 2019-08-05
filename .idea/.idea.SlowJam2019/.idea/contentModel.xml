@@ -149,6 +149,9 @@
             <e p="Item2.cs" t="Include" />
             <e p="ScoreScript.cs" t="Include" />
           </e>
+          <e p="Items" t="Include">
+            <e p="Item.cs" t="Include" />
+          </e>
           <e p="Obstacles" t="Include">
             <e p="Elevator.cs" t="Include" />
             <e p="Platform.cs" t="Include" />
@@ -160,6 +163,8 @@
           </e>
           <e p="Zones" t="Include">
             <e p="ForceZone.cs" t="Include" />
+            <e p="GrowZone.cs" t="Include" />
+            <e p="ShrinkZone.cs" t="Include" />
             <e p="WinZone.cs" t="Include" />
             <e p="Zone.cs" t="Include" />
           </e>

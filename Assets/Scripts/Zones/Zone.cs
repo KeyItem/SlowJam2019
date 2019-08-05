@@ -24,13 +24,13 @@ public class Zone : MonoBehaviour
     {
         if (zoneSettings.zoneShape == ZONE_SHAPE.BOX)
         {
-            Collider[] hitObjects = Physics.OverlapBox(transform.position, zoneSettings.zoneSize / 2, Quaternion.Euler(zoneSettings.zoneRotation), zoneSettings.zoneMask);
+            Collider[] hitObjects = Physics.OverlapBox(transform.position, zoneSettings.zoneSize / 2, Quaternion.Euler(zoneSettings.zoneRotation), zoneSettings.zoneCollisionMask);
 
             return hitObjects;
         }
         else
         {
-            Collider[] hitObjects = Physics.OverlapSphere(transform.position, zoneSettings.zoneRadius, zoneSettings.zoneMask);
+            Collider[] hitObjects = Physics.OverlapSphere(transform.position, zoneSettings.zoneRadius, zoneSettings.zoneCollisionMask);
 
             return hitObjects;
         }
@@ -81,7 +81,7 @@ public struct ZoneSettings
     public float zoneForceStrength;
 
     [Space(10)] 
-    public LayerMask zoneMask;
+    public LayerMask zoneCollisionMask;
 }
 
 public enum ZONE_SHAPE

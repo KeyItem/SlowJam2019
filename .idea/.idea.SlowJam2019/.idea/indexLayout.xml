@@ -22,7 +22,6 @@
       <Path>Library</Path>
       <Path>RewiredBackup</Path>
       <Path>SlowJam_2019</Path>
-      <Path>Temp</Path>
       <Path>obj</Path>
     </explicitExcludes>
   </component>
