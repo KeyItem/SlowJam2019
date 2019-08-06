@@ -12,7 +12,7 @@ public class GrowZone : Zone
 
         for (int i = 0; i < hitControllers.Count; i++)
         {
-            hitControllers[i].Enlarge();
+            hitControllers[i].Enlarge(zoneSettings.zoneForceStrength);
         }
     }
 

@@ -10,10 +10,7 @@ public class EntityController : MonoBehaviour
     
     [Space(10)] 
     private CameraFollow cameraFollow;
-
-    private MeshCollider entityMeshCollider;
-    private MeshFilter entityMesh;
-
+    
     [HideInInspector]
     public Rigidbody entityRigidbody;
 
@@ -33,13 +30,10 @@ public class EntityController : MonoBehaviour
     private void InitializeEntity()
     {
         cameraFollow = Camera.main.GetComponent<CameraFollow>();
-
-        entityMesh = GetComponent<MeshFilter>();
-
+        
         entityRigidbody = GetComponent<Rigidbody>();
 
-        entityMeshCollider = GetComponent<MeshCollider>();
-
+        entityInfo.entityStartingPosition = transform.position;
         entityInfo.resizingSettings.entityBaseScale = transform.localScale;
     }
 
@@ -59,6 +53,7 @@ public class EntityController : MonoBehaviour
         entityRigidbody.AddForce((entityInfo.movementSettings.entityMovementMultiplier * effectiveness) * Time.deltaTime * moveDirection, ForceMode.Impulse);
     }
     
+    /*
     public virtual void SpecialShrink(Vector3 hitPoint)
     {
         Mesh myMesh = entityMesh.mesh;
@@ -91,6 +86,7 @@ public class EntityController : MonoBehaviour
         entityMeshCollider.sharedMesh = myMesh;
     }
 
+    
     public virtual void SpecialEnlarge(Vector3 hitPoint)
     {
         Mesh myMesh = entityMesh.mesh;
@@ -123,12 +119,13 @@ public class EntityController : MonoBehaviour
         entityMeshCollider.sharedMesh = myMesh;
     }
     
-    public virtual void Shrink()
+    */
+    
+    public virtual void Shrink(float multiplier = 1f)
     {
         if (entityInfo.resizingSettings.canBeShrinked)
         {
-            Vector3 newSize = ReturnNewSize(SIZE_DIRECTION.SHRINK, transform.localScale);
-            newSize -= entityInfo.resizingSettings.shrinkMultiplier * Time.deltaTime * Vector3.one;
+            Vector3 newSize = ReturnNewSize(SIZE_DIRECTION.SHRINK, multiplier, transform.localScale);
                                    
             if (newSize.sqrMagnitude < entityInfo.resizingSettings.minSize)
             {
@@ -150,8 +147,7 @@ public class EntityController : MonoBehaviour
     {
         if (entityInfo.resizingSettings.canBeShrinked)
         {
-            Vector3 newSize = ReturnNewSize(SIZE_DIRECTION.SHRINK, transform.localScale);
-            newSize -= entityInfo.resizingSettings.shrinkMultiplier * Time.deltaTime * Vector3.one;
+            Vector3 newSize = ReturnNewSizeByPercent(SIZE_DIRECTION.SHRINK, newPercentage, transform.localScale);
                                    
             if (newSize.sqrMagnitude < entityInfo.resizingSettings.minSize)
             {
@@ -169,11 +165,11 @@ public class EntityController : MonoBehaviour
         }
     }
 
-    public virtual void Enlarge()
+    public virtual void Enlarge(float multiplier = 1f)
     {
         if (entityInfo.resizingSettings.canBeEnlarged)
         {
-            Vector3 newSize = ReturnNewSize(SIZE_DIRECTION.ENLARGE, transform.localScale);
+            Vector3 newSize = ReturnNewSize(SIZE_DIRECTION.ENLARGE, multiplier, transform.localScale);
                             
             if (newSize.sqrMagnitude > entityInfo.resizingSettings.maxSize)
             {
@@ -193,15 +189,44 @@ public class EntityController : MonoBehaviour
 
     public virtual void EnlargeByPercentage(float newPercentage)
     {
-
+        if (entityInfo.resizingSettings.canBeShrinked)
+        {
+            Vector3 newSize = ReturnNewSizeByPercent(SIZE_DIRECTION.ENLARGE, newPercentage, transform.localScale);
+                                   
+            if (newSize.sqrMagnitude < entityInfo.resizingSettings.minSize)
+            {
+                if (entityInfo.resizingSettings.isKilledAfterMinSize)
+                {
+                    cameraFollow.RemoveTarget(transform);
+                
+                    Destroy(gameObject);
+                
+                    return;
+                }
+            }
+        
+            transform.localScale = newSize;
+        }
     }
 
-    public virtual void ResetEntitySize()
+    public virtual void ResetEntity()
     {
+        transform.position = entityInfo.entityStartingPosition;
+        
         transform.localScale = entityInfo.resizingSettings.entityBaseScale;
     }
 
-    private Vector3 ReturnNewSize(SIZE_DIRECTION sizeDirection, Vector3 baseSize)
+    public virtual void SelectEntity()
+    {
+        
+    }
+
+    public virtual void UnSelectEntity()
+    {
+        
+    }
+    
+    private Vector3 ReturnNewSize(SIZE_DIRECTION sizeDirection, float overallMultiplier, Vector3 baseSize)
     {
         Vector3 newSize = baseSize;
         float sizeMultiplier = 0;
@@ -212,17 +237,17 @@ public class EntityController : MonoBehaviour
 
             if (entityInfo.resizingSettings.canXBeModified)
             {
-                newSize.x -= 1f * sizeMultiplier * Time.deltaTime;
+                newSize.x -= (1 * sizeMultiplier * Time.deltaTime) * overallMultiplier;
             }
 
             if (entityInfo.resizingSettings.canYBeModified)
             {
-                newSize.y -= 1f * sizeMultiplier * Time.deltaTime;
+                newSize.y -= (1 * sizeMultiplier * Time.deltaTime) * overallMultiplier;
             }
 
             if (entityInfo.resizingSettings.canZBeModified)
             {
-                newSize.z -= 1f * sizeMultiplier * Time.deltaTime;
+                newSize.z -= (1 * sizeMultiplier * Time.deltaTime) * overallMultiplier;
             }
         }
         else
@@ -231,17 +256,17 @@ public class EntityController : MonoBehaviour
             
             if (entityInfo.resizingSettings.canXBeModified)
             {
-                newSize.x += 1 * sizeMultiplier * Time.deltaTime;
+                newSize.x += (1 * sizeMultiplier * Time.deltaTime) * overallMultiplier;
             }
 
             if (entityInfo.resizingSettings.canYBeModified)
             {
-                newSize.y += 1 * sizeMultiplier * Time.deltaTime;
+                newSize.y += (1 * sizeMultiplier * Time.deltaTime) * overallMultiplier;
             }
 
             if (entityInfo.resizingSettings.canZBeModified)
             {
-                newSize.z += 1 * sizeMultiplier * Time.deltaTime;
+                newSize.z += (1 * sizeMultiplier * Time.deltaTime) * overallMultiplier;
             }
         }
 
@@ -250,7 +275,44 @@ public class EntityController : MonoBehaviour
 
     private Vector3 ReturnNewSizeByPercent(SIZE_DIRECTION sizeDirection, float sizePercent, Vector3 baseSize)
     {
-        return Vector3.zero;
+        Vector3 newSize = baseSize;
+
+        if (sizeDirection == SIZE_DIRECTION.SHRINK)
+        {
+            if (entityInfo.resizingSettings.canXBeModified)
+            {
+                newSize.x /= sizePercent;
+            }
+
+            if (entityInfo.resizingSettings.canYBeModified)
+            {
+                newSize.y /= sizePercent;
+            }
+
+            if (entityInfo.resizingSettings.canZBeModified)
+            {
+                newSize.z /= sizePercent;
+            }
+        }
+        else
+        {
+            if (entityInfo.resizingSettings.canXBeModified)
+            {
+                newSize.x *= sizePercent;
+            }
+
+            if (entityInfo.resizingSettings.canYBeModified)
+            {
+                newSize.y *= sizePercent;
+            }
+
+            if (entityInfo.resizingSettings.canZBeModified)
+            {
+                newSize.z *= sizePercent;
+            }
+        }
+
+        return newSize;
     }
 
     public virtual bool CanMoveInDirection(Vector3 direction)
@@ -302,6 +364,9 @@ public class EntityController : MonoBehaviour
 public struct EntityInfo
 {
     public string entityName;
+
+    [Space(10)]
+    public Vector3 entityStartingPosition;
     
     [Space(10)]
     public EntityMovementSettings movementSettings;
