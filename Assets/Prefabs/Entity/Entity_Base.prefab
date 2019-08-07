@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 6431935337902426559}
   - component: {fileID: 2601345159047934857}
   - component: {fileID: 8585370282807529328}
+  - component: {fileID: 457411837}
   - component: {fileID: 2033489384076829350}
-  - component: {fileID: 2033489384076829353}
   - component: {fileID: 2033489384076829351}
   m_Layer: 8
-  m_Name: HighPoly_Sphere
+  m_Name: Entity_Base
   m_TagString: Entity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,6 +80,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!135 &457411837
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8005582388226833324}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2033489384076829350
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -96,20 +109,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 56
   m_CollisionDetection: 0
---- !u!64 &2033489384076829353
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8005582388226833324}
-  m_Material: {fileID: 13400000, guid: d47fb356a1edaed4580fa0a5360d1e41, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 289301614986012343, guid: c650786ee0fb15a40bec72f1154affe5, type: 3}
 --- !u!114 &2033489384076829351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +132,6 @@ MonoBehaviour:
       canMoveRight: 1
     resizingSettings:
       entityBaseScale: {x: 0, y: 0, z: 0}
-      modifyThreshold: 0
       canXBeModified: 1
       canYBeModified: 1
       canZBeModified: 1
@@ -146,10 +144,17 @@ MonoBehaviour:
       isKilledAfterMinSize: 0
       isKilledAfterMaxSize: 0
     collisionSettings:
-      groundCheckRayLength: 1.5
-      groundCollisionMask:
+      groundCheckRayLength: 0.2
+      ceilingCheckRayLength: 0.2
+      skinWidth: {x: 0, y: -0.15, z: 0}
+      collisionMask:
         serializedVersion: 2
         m_Bits: 257
+  entityCollider: {fileID: 0}
   entityRigidbody: {fileID: 0}
   collisionInfo:
+    collisionBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
     isGrounded: 0
+    isCollidingOnTop: 0

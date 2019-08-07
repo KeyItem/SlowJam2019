@@ -8,14 +8,14 @@ public class EntityController : MonoBehaviour
     [Header("Entity Attributes")] 
     public EntityInfo entityInfo;
     
-    [Space(10)] 
-    private CameraFollow cameraFollow;
-    
-    [HideInInspector]
+    [Space(10)]
+    public Collider entityCollider;
     public Rigidbody entityRigidbody;
 
     [Header("Entity Collision Attributes")]
     public EntityCollisionInfo collisionInfo;
+
+    private CameraFollow cameraFollow;
 
     private void Awake()
     {
@@ -30,23 +30,34 @@ public class EntityController : MonoBehaviour
     private void InitializeEntity()
     {
         cameraFollow = Camera.main.GetComponent<CameraFollow>();
-        
-        entityRigidbody = GetComponent<Rigidbody>();
 
+        entityCollider = GetComponent<Collider>();
+        entityRigidbody = GetComponent<Rigidbody>();
+        
         entityInfo.entityStartingPosition = transform.position;
         entityInfo.resizingSettings.entityBaseScale = transform.localScale;
     }
 
     public virtual void ManageCollision()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, entityInfo.collisionSettings.groundCheckRayLength, entityInfo.collisionSettings.groundCollisionMask))
-        {   
-            collisionInfo = new EntityCollisionInfo(true);
-        }
-        else
-        {
-            collisionInfo = new EntityCollisionInfo(false);
-        }
+        Bounds newBounds = entityCollider.bounds;
+
+        float topSize = newBounds.extents.y;
+        float bottomSize = -newBounds.extents.y;
+        float leftSize = -newBounds.extents.x;
+        float rightSize = newBounds.extents.x;
+
+        Vector3 groundPoint = new Vector3(0, bottomSize, 0) + transform.position - entityInfo.collisionSettings.skinWidth;
+        Vector3 ceilingPoint = new Vector3(0, topSize, 0) + transform.position + entityInfo.collisionSettings.skinWidth;
+        Vector3 leftPoint = new Vector3(leftSize, 0, 0) + transform.position + entityInfo.collisionSettings.skinWidth;
+        Vector3 rightPoint = new Vector3(rightSize, 0, 0) + transform.position + entityInfo.collisionSettings.skinWidth;
+
+        bool isGrounded = Physics.Raycast(groundPoint, Vector3.down, entityInfo.collisionSettings.checkRayLength, entityInfo.collisionSettings.collisionMask);
+        bool isCollidingOnTop = Physics.Raycast(ceilingPoint, Vector3.up, entityInfo.collisionSettings.checkRayLength, entityInfo.collisionSettings.collisionMask);
+        bool isCollidingLeft = Physics.Raycast(leftPoint, Vector3.left, entityInfo.collisionSettings.checkRayLength, entityInfo.collisionSettings.collisionMask);
+        bool isCollidingRight = Physics.Raycast(rightPoint, Vector3.right, entityInfo.collisionSettings.checkRayLength, entityInfo.collisionSettings.collisionMask);
+
+        collisionInfo = new EntityCollisionInfo(newBounds, isGrounded, isCollidingOnTop, isCollidingLeft, isCollidingRight);
     }
     public virtual void MoveEntity(Vector3 moveDirection, float effectiveness)
     {
@@ -167,7 +178,7 @@ public class EntityController : MonoBehaviour
 
     public virtual void Enlarge(float multiplier = 1f)
     {
-        if (entityInfo.resizingSettings.canBeEnlarged)
+        if (entityInfo.resizingSettings.canBeEnlarged && !collisionInfo.isCollidingOnTop)
         {
             Vector3 newSize = ReturnNewSize(SIZE_DIRECTION.ENLARGE, multiplier, transform.localScale);
                             
@@ -317,7 +328,7 @@ public class EntityController : MonoBehaviour
 
     public virtual bool CanMoveInDirection(Vector3 direction)
     {
-        if (collisionInfo.isGrounded)
+        if (collisionInfo.isCollidingBottom)
         {
             if (direction == Vector3.left)
             {
@@ -352,11 +363,24 @@ public class EntityController : MonoBehaviour
         return false;
     }
 
-    public void OnDrawGizmosSelected()
+    public void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
+        float topSize = collisionInfo.collisionBounds.extents.y;
+        float bottomSize = -collisionInfo.collisionBounds.extents.y;
+        float leftSize = -collisionInfo.collisionBounds.extents.x;
+        float rightSize = collisionInfo.collisionBounds.extents.x;
+
+        Vector3 groundPoint = new Vector3(0, bottomSize, 0) + transform.position - entityInfo.collisionSettings.skinWidth;
+        Vector3 ceilingPoint = new Vector3(0, topSize, 0) + transform.position + entityInfo.collisionSettings.skinWidth;
+        Vector3 leftPoint = new Vector3(leftSize, 0, 0) + transform.position + entityInfo.collisionSettings.skinWidth;
+        Vector3 rightPoint = new Vector3(rightSize, 0, 0) + transform.position + entityInfo.collisionSettings.skinWidth;
         
-        Gizmos.DrawRay(transform.position, Vector3.down * entityInfo.collisionSettings.groundCheckRayLength);
+        Gizmos.color = Color.green;
+
+        Gizmos.DrawRay(groundPoint, Vector3.down * entityInfo.collisionSettings.checkRayLength);
+        Gizmos.DrawRay(ceilingPoint, Vector3.up * entityInfo.collisionSettings.checkRayLength);
+        Gizmos.DrawRay(leftPoint, Vector3.left * entityInfo.collisionSettings.checkRayLength);
+        Gizmos.DrawRay(rightPoint, Vector3.right * entityInfo.collisionSettings.checkRayLength);
     }
 }
 
@@ -396,9 +420,6 @@ public struct EntityResizingSettings
 {
     [Header("Entity Size Attributes")] 
     public Vector3 entityBaseScale;
-
-    [Space(10)] 
-    public float modifyThreshold;
     
     [Space(10)]
     public bool canXBeModified;
@@ -426,21 +447,35 @@ public struct EntityResizingSettings
 public struct EntityCollisionSettings
 {
     [Header("Entity Collision Settings")]
-    public float groundCheckRayLength;
+    public float checkRayLength;
+
+    [Space(10)]
+    public Vector3 skinWidth;
     
     [Space(10)]
-    public LayerMask groundCollisionMask;
+    public LayerMask collisionMask;
 }
 
 [System.Serializable]
 public struct EntityCollisionInfo
 {
     [Header("Entity Collision Info")]
-    public bool isGrounded;
+    public Bounds collisionBounds;
 
-    public EntityCollisionInfo(bool newIsGrounded)
+    [Space(10)]
+    public bool isCollidingBottom;
+    public bool isCollidingOnTop;
+    public bool isCollidingOnLeft;
+    public bool isCollidingOnRight;
+
+    public EntityCollisionInfo(Bounds newBounds, bool newIsCollidingBottom, bool newIsCollidingOnTop, bool newIsCollidingOnLeft, bool newIsCollidingOnRight)
     {
-        this.isGrounded = newIsGrounded;
+        this.collisionBounds = newBounds;
+        
+        this.isCollidingBottom = newIsCollidingBottom;
+        this.isCollidingOnTop = newIsCollidingOnTop;
+        this.isCollidingOnLeft = newIsCollidingOnLeft;
+        this.isCollidingOnRight = newIsCollidingOnRight;
     }
 }
 
