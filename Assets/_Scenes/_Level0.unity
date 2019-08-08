@@ -6019,5 +6019,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3489546743523998384, guid: 967576aa7f73783489d4d6d57bab3a10,
+        type: 3}
+      propertyPath: zoneSettings.zoneSize.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3489546743523998384, guid: 967576aa7f73783489d4d6d57bab3a10,
+        type: 3}
+      propertyPath: winSettings.entitiesNeededToWin
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 967576aa7f73783489d4d6d57bab3a10, type: 3}

@@ -6,7 +6,16 @@ using UnityEngine.SceneManagement;
 public class WinZone : Zone
 {
     [Header("Win Zone Attributes")]
+    public WinZoneSettings winSettings;
+    
+    [Space(10)]
     public List<Collider> detectedColliders = new List<Collider>();
+
+    public override void InitializeZone()
+    {
+        detectedColliders = new List<Collider>();
+    }
+
     public override void ManageZone()
     {
         Collider[] hitObjects = ReturnHitObjects(zoneSettings);
@@ -16,23 +25,38 @@ public class WinZone : Zone
             if (!detectedColliders.Contains(hitObjects[i]))
             {
                 detectedColliders.Add(hitObjects[i]);
-                
-                ActivateWinZone();
+
+                if (CheckForWinCondition())
+                {
+                    ActivateWinZone();
+                }
             }
         }
     }
-
-    public void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Entity"))
-        {
-            ActivateWinZone();
-        }
-    }
-
+    
     private void ActivateWinZone()
     {
         int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextScene);
     }
+
+    public bool CheckForWinCondition()
+    {
+        if (detectedColliders.Count != 0)
+        {
+            if (detectedColliders.Count >= winSettings.entitiesNeededToWin)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+[System.Serializable]
+public struct WinZoneSettings
+{
+    [Header("Win Zone Settings")]
+    public int entitiesNeededToWin;
 }

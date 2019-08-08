@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,12 +10,21 @@ public class Zone : MonoBehaviour
 
     [Space(10)] 
     public bool isZoneActive = true;
-    
+
+    private void Start()
+    {
+        InitializeZone();
+    }
+
     private void FixedUpdate()
     {
         ManageZone();
     }
 
+    public virtual void InitializeZone()
+    {
+        
+    }
     public virtual void ManageZone()
     {
         Collider[] hitObjects = ReturnHitObjects(zoneSettings);

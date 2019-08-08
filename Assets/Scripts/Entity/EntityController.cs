@@ -56,8 +56,8 @@ public class EntityController : MonoBehaviour
         Vector3 currentPosition = transform.position;
 
         Vector3 groundPoint = new Vector3(0, bottomSize, 0) + currentPosition -  (Vector3.down * entityInfo.collisionSettings.skinWidth);
-        Vector3 ceilingPoint = new Vector3(0, topSize, 0) + currentPosition + (Vector3.up * entityInfo.collisionSettings.skinWidth);
-        Vector3 leftPoint = new Vector3(leftSize, 0, 0) + currentPosition + (Vector3.left * entityInfo.collisionSettings.skinWidth);
+        Vector3 ceilingPoint = new Vector3(0, topSize, 0) + currentPosition - (Vector3.up * entityInfo.collisionSettings.skinWidth);
+        Vector3 leftPoint = new Vector3(leftSize, 0, 0) + currentPosition- (Vector3.left * entityInfo.collisionSettings.skinWidth);
         Vector3 rightPoint = new Vector3(rightSize, 0, 0) + currentPosition - (Vector3.right * entityInfo.collisionSettings.skinWidth);
 
         bool isGrounded = Physics.Raycast(groundPoint, Vector3.down, entityInfo.collisionSettings.checkRayLength, entityInfo.collisionSettings.collisionMask);
@@ -425,11 +425,13 @@ public class EntityController : MonoBehaviour
         float bottomSize = -collisionInfo.collisionBounds.extents.y;
         float leftSize = -collisionInfo.collisionBounds.extents.x;
         float rightSize = collisionInfo.collisionBounds.extents.x;
+        
+        Vector3 currentPosition = transform.position;
 
-        Vector3 groundPoint = new Vector3(0, bottomSize, 0) + transform.position -  (Vector3.down * entityInfo.collisionSettings.skinWidth);
-        Vector3 ceilingPoint = new Vector3(0, topSize, 0) + transform.position + (Vector3.up * entityInfo.collisionSettings.skinWidth);
-        Vector3 leftPoint = new Vector3(leftSize, 0, 0) + transform.position + (Vector3.left * entityInfo.collisionSettings.skinWidth);
-        Vector3 rightPoint = new Vector3(rightSize, 0, 0) + transform.position - (Vector3.right * entityInfo.collisionSettings.skinWidth);
+        Vector3 groundPoint = new Vector3(0, bottomSize, 0) + currentPosition -  (Vector3.down * entityInfo.collisionSettings.skinWidth);
+        Vector3 ceilingPoint = new Vector3(0, topSize, 0) + currentPosition - (Vector3.up * entityInfo.collisionSettings.skinWidth);
+        Vector3 leftPoint = new Vector3(leftSize, 0, 0) + currentPosition- (Vector3.left * entityInfo.collisionSettings.skinWidth);
+        Vector3 rightPoint = new Vector3(rightSize, 0, 0) + currentPosition - (Vector3.right * entityInfo.collisionSettings.skinWidth);
         
         Gizmos.color = Color.green;
 

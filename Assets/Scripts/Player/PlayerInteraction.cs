@@ -149,7 +149,10 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Physics.Raycast(checkRay, out checkRayInfo, interactionSettings.interactionMask))
         {
-            return new HitEntityInfo(checkRayInfo.transform.GetComponent<EntityController>(), checkRayInfo.point);
+            if (checkRayInfo.collider != null)
+            {
+                return new HitEntityInfo(checkRayInfo.transform.GetComponent<EntityController>(), checkRayInfo.point);
+            }
         }
 
         return new HitEntityInfo();
