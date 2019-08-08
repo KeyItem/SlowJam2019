@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8005582388226833324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
     entityName: TestSphere
     entityStartingPosition: {x: 0, y: 0, z: 0}
     movementSettings:
-      entityMovementMultiplier: 250
+      entityMovementMultiplier: 300
       canMoveUp: 1
       canMoveDown: 1
       canMoveLeft: 1
@@ -135,8 +135,8 @@ MonoBehaviour:
       canXBeModified: 1
       canYBeModified: 1
       canZBeModified: 1
-      shrinkMultiplier: 1
-      enlargeMultiplier: 1
+      shrinkMultiplier: 3
+      enlargeMultiplier: 3
       minSize: 0.2
       maxSize: 10
       canBeShrinked: 1
@@ -144,8 +144,7 @@ MonoBehaviour:
       isKilledAfterMinSize: 0
       isKilledAfterMaxSize: 0
     collisionSettings:
-      groundCheckRayLength: 0.2
-      ceilingCheckRayLength: 0.2
+      checkRayLength: 0.5
       skinWidth: {x: 0, y: -0.15, z: 0}
       collisionMask:
         serializedVersion: 2
@@ -156,5 +155,7 @@ MonoBehaviour:
     collisionBounds:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0, y: 0, z: 0}
-    isGrounded: 0
+    isCollidingBottom: 0
     isCollidingOnTop: 0
+    isCollidingOnLeft: 0
+    isCollidingOnRight: 0
