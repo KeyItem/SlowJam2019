@@ -18,9 +18,6 @@ public class PlayerController : MonoBehaviour
     
     [Space(10)]
     public float moveEffictiveness;
-    
-    [Header("Selected Entity")]
-    public EntityController selectedEntity;
 
     private void Awake()
     {
@@ -31,7 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         input = GetComponent<PlayerInput>();
         interaction = GetComponent<PlayerInteraction>();
-
+        
         moveEffictiveness = movementSettings.maxMovementCooldown;
     }
 
@@ -58,44 +55,28 @@ public class PlayerController : MonoBehaviour
 
     private void ManageInteraction(InputInfo input)
     {
+        interaction.ManageInteraction();
+        
         if (CheckForShrinkInteractionInput(input))
         {
-            HitEntityInfo hitEntity = interaction.SearchForEntity();
-
-            if (hitEntity.entityController != null)
-            {
-                if (hitEntity.entityController != selectedEntity)
-                {
-                    selectedEntity = hitEntity.entityController;
-                    
-                    return;
-                }
-                else
-                {
-                    selectedEntity.Shrink();
-                }
-            }
+            interaction.ShrinkSelectedEntity();
         }
         else if (CheckForEnlargeInteractionInput(input))
         {
-            if (selectedEntity != null)
-            {
-                selectedEntity.Enlarge();
-            }
+           interaction.EnlargeSelectedEntity();
         }
     }
-
     private void ManageMovement(InputInfo input)
     {
-        if (selectedEntity != null)
+        if (interaction.selectedEntity != null)
         {
             if (CheckForMovementInput(input))
             {
                 Vector3 moveDirection = DetermineMovementDirection(input);
 
-                if (selectedEntity.CanMoveInDirection(moveDirection))
+                if (interaction.selectedEntity.CanMoveInDirection(moveDirection))
                 {
-                    selectedEntity.MoveEntity(moveDirection, ReturnMoveEffectivenessRatio(moveEffictiveness));
+                    interaction.selectedEntity.MoveEntity(moveDirection, ReturnMoveEffectivenessRatio(moveEffictiveness));
 
                     moveEffictiveness = 0;
                 }

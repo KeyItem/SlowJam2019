@@ -166,6 +166,7 @@
           <e p="Zones" t="Include">
             <e p="ForceZone.cs" t="Include" />
             <e p="GrowZone.cs" t="Include" />
+            <e p="KillZone.cs" t="Include" />
             <e p="ShrinkZone.cs" t="Include" />
             <e p="WinZone.cs" t="Include" />
             <e p="Zone.cs" t="Include" />

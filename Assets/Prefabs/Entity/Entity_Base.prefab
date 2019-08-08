@@ -144,7 +144,7 @@ MonoBehaviour:
       isKilledAfterMinSize: 0
       isKilledAfterMaxSize: 0
     collisionSettings:
-      checkRayLength: 0.5
+      checkRayLength: 0.25
       skinWidth: {x: 0, y: -0.15, z: 0}
       collisionMask:
         serializedVersion: 2

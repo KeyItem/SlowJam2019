@@ -12,6 +12,9 @@ public class EntityController : MonoBehaviour
     public Collider entityCollider;
     public Rigidbody entityRigidbody;
 
+    [Space(10)]
+    public Renderer entityRenderer;
+
     [Header("Entity Collision Attributes")]
     public EntityCollisionInfo collisionInfo;
 
@@ -33,6 +36,8 @@ public class EntityController : MonoBehaviour
 
         entityCollider = GetComponent<Collider>();
         entityRigidbody = GetComponent<Rigidbody>();
+
+        entityRenderer = GetComponent<Renderer>();
         
         entityInfo.entityStartingPosition = transform.position;
         entityInfo.resizingSettings.entityBaseScale = transform.localScale;
@@ -225,16 +230,28 @@ public class EntityController : MonoBehaviour
         transform.position = entityInfo.entityStartingPosition;
         
         transform.localScale = entityInfo.resizingSettings.entityBaseScale;
+
+        entityRigidbody.velocity = Vector3.zero;
     }
 
     public virtual void SelectEntity()
     {
-        
+        entityRenderer.material.color = Color.green;
     }
 
     public virtual void UnSelectEntity()
     {
-        
+        entityRenderer.material.color = Color.red;
+    }
+
+    public virtual void StartHover()
+    {
+        entityRenderer.material.color = Color.white;
+    }
+
+    public virtual void StopHover()
+    {
+        entityRenderer.material.color = Color.black;
     }
     
     private Vector3 ReturnNewSize(SIZE_DIRECTION sizeDirection, float overallMultiplier, Vector3 baseSize)
