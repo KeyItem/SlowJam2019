@@ -27,8 +27,6 @@ public class CameraFollow : MonoBehaviour
    private void InitializeCamera()
    {
        targetCamera = Camera.main;
-
-       cameraActiveTargets = ReturnAllActiveTargets();
    }
 
    private void ManageCamera()
@@ -95,7 +93,7 @@ public class CameraFollow : MonoBehaviour
        }
        else
        {
-           return Vector3.zero;
+           return cameraSettings.defaultPosition;
        }
    }
 
@@ -152,6 +150,15 @@ public class CameraFollow : MonoBehaviour
        return newActiveTargets;
    }
 
+   public void AddTarget(Transform targetToAdd)
+   {
+       if (cameraActiveTargets.Contains(targetToAdd))
+       {
+           return;
+       }
+       
+       cameraActiveTargets.Add(targetToAdd);
+   }
    public void RemoveTarget(Transform targetToRemove)
    {
        if (cameraActiveTargets.Contains(targetToRemove))
@@ -176,6 +183,9 @@ public struct CameraSettings
     [Space(10)] [Range(0, 10)] 
     public float rotationalSmoothing;
 
+    [Space(10)]
+    public Vector3 defaultPosition;
+    
     [Space(10)] 
     public Vector3 offset;
     

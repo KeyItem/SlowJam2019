@@ -11,15 +11,15 @@ public class EntityController : MonoBehaviour
     [Space(10)]
     public Collider entityCollider;
     public Rigidbody entityRigidbody;
-
-    [Space(10)]
-    public Renderer entityRenderer;
-
+    
     [Header("Entity Collision Attributes")]
     public EntityCollisionInfo collisionInfo;
 
     private CameraFollow cameraFollow;
 
+    [Header("Entity Outline Attributes")]
+    private Outline entityOutline;
+    
     private void Awake()
     {
         InitializeEntity();
@@ -36,8 +36,9 @@ public class EntityController : MonoBehaviour
 
         entityCollider = GetComponent<Collider>();
         entityRigidbody = GetComponent<Rigidbody>();
-
-        entityRenderer = GetComponent<Renderer>();
+        
+        entityOutline = GetComponent<Outline>();
+        entityOutline.enabled = false;
         
         entityInfo.entityStartingPosition = transform.position;
         entityInfo.resizingSettings.entityBaseScale = transform.localScale;
@@ -52,10 +53,12 @@ public class EntityController : MonoBehaviour
         float leftSize = -newBounds.extents.x;
         float rightSize = newBounds.extents.x;
 
-        Vector3 groundPoint = new Vector3(0, bottomSize, 0) + transform.position - entityInfo.collisionSettings.skinWidth;
-        Vector3 ceilingPoint = new Vector3(0, topSize, 0) + transform.position + entityInfo.collisionSettings.skinWidth;
-        Vector3 leftPoint = new Vector3(leftSize, 0, 0) + transform.position + entityInfo.collisionSettings.skinWidth;
-        Vector3 rightPoint = new Vector3(rightSize, 0, 0) + transform.position + entityInfo.collisionSettings.skinWidth;
+        Vector3 currentPosition = transform.position;
+
+        Vector3 groundPoint = new Vector3(0, bottomSize, 0) + currentPosition -  (Vector3.down * entityInfo.collisionSettings.skinWidth);
+        Vector3 ceilingPoint = new Vector3(0, topSize, 0) + currentPosition + (Vector3.up * entityInfo.collisionSettings.skinWidth);
+        Vector3 leftPoint = new Vector3(leftSize, 0, 0) + currentPosition + (Vector3.left * entityInfo.collisionSettings.skinWidth);
+        Vector3 rightPoint = new Vector3(rightSize, 0, 0) + currentPosition - (Vector3.right * entityInfo.collisionSettings.skinWidth);
 
         bool isGrounded = Physics.Raycast(groundPoint, Vector3.down, entityInfo.collisionSettings.checkRayLength, entityInfo.collisionSettings.collisionMask);
         bool isCollidingOnTop = Physics.Raycast(ceilingPoint, Vector3.up, entityInfo.collisionSettings.checkRayLength, entityInfo.collisionSettings.collisionMask);
@@ -139,7 +142,7 @@ public class EntityController : MonoBehaviour
     
     public virtual void Shrink(float multiplier = 1f)
     {
-        if (entityInfo.resizingSettings.canBeShrinked)
+        if (CanBeShrunk(collisionInfo))
         {
             Vector3 newSize = ReturnNewSize(SIZE_DIRECTION.SHRINK, multiplier, transform.localScale);
                                    
@@ -161,7 +164,7 @@ public class EntityController : MonoBehaviour
 
     public virtual void ShrinkByPercentage(float newPercentage)
     {
-        if (entityInfo.resizingSettings.canBeShrinked)
+        if (CanBeShrunk(collisionInfo))
         {
             Vector3 newSize = ReturnNewSizeByPercent(SIZE_DIRECTION.SHRINK, newPercentage, transform.localScale);
                                    
@@ -183,7 +186,7 @@ public class EntityController : MonoBehaviour
 
     public virtual void Enlarge(float multiplier = 1f)
     {
-        if (entityInfo.resizingSettings.canBeEnlarged && !collisionInfo.isCollidingOnTop)
+        if (CanBeEnlarged(collisionInfo))
         {
             Vector3 newSize = ReturnNewSize(SIZE_DIRECTION.ENLARGE, multiplier, transform.localScale);
                             
@@ -205,7 +208,7 @@ public class EntityController : MonoBehaviour
 
     public virtual void EnlargeByPercentage(float newPercentage)
     {
-        if (entityInfo.resizingSettings.canBeShrinked)
+        if (CanBeEnlarged(collisionInfo))
         {
             Vector3 newSize = ReturnNewSizeByPercent(SIZE_DIRECTION.ENLARGE, newPercentage, transform.localScale);
                                    
@@ -236,22 +239,28 @@ public class EntityController : MonoBehaviour
 
     public virtual void SelectEntity()
     {
-        entityRenderer.material.color = Color.green;
+        entityOutline.OutlineColor = Color.green;
     }
 
     public virtual void UnSelectEntity()
     {
-        entityRenderer.material.color = Color.red;
+        entityOutline.enabled = false;
+        
+        entityOutline.OutlineColor = Color.clear;
     }
 
     public virtual void StartHover()
     {
-        entityRenderer.material.color = Color.white;
+        entityOutline.enabled = true;
+
+        entityOutline.OutlineColor = Color.yellow;
     }
 
     public virtual void StopHover()
     {
-        entityRenderer.material.color = Color.black;
+        entityOutline.enabled = false;
+
+        entityOutline.OutlineColor = Color.clear;
     }
     
     private Vector3 ReturnNewSize(SIZE_DIRECTION sizeDirection, float overallMultiplier, Vector3 baseSize)
@@ -380,6 +389,36 @@ public class EntityController : MonoBehaviour
         return false;
     }
 
+    public virtual bool CanBeShrunk(EntityCollisionInfo newCollision)
+    {
+        if (entityInfo.resizingSettings.canBeShrunk)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    
+    public virtual bool CanBeEnlarged(EntityCollisionInfo newCollision)
+    {
+        if (entityInfo.resizingSettings.canBeEnlarged)
+        {
+            if (newCollision.isCollidingOnTop)
+            {
+                return false;
+            }
+
+            if (newCollision.isCollidingOnLeft && newCollision.isCollidingOnRight)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     public void OnDrawGizmos()
     {
         float topSize = collisionInfo.collisionBounds.extents.y;
@@ -387,10 +426,10 @@ public class EntityController : MonoBehaviour
         float leftSize = -collisionInfo.collisionBounds.extents.x;
         float rightSize = collisionInfo.collisionBounds.extents.x;
 
-        Vector3 groundPoint = new Vector3(0, bottomSize, 0) + transform.position - entityInfo.collisionSettings.skinWidth;
-        Vector3 ceilingPoint = new Vector3(0, topSize, 0) + transform.position + entityInfo.collisionSettings.skinWidth;
-        Vector3 leftPoint = new Vector3(leftSize, 0, 0) + transform.position + entityInfo.collisionSettings.skinWidth;
-        Vector3 rightPoint = new Vector3(rightSize, 0, 0) + transform.position + entityInfo.collisionSettings.skinWidth;
+        Vector3 groundPoint = new Vector3(0, bottomSize, 0) + transform.position -  (Vector3.down * entityInfo.collisionSettings.skinWidth);
+        Vector3 ceilingPoint = new Vector3(0, topSize, 0) + transform.position + (Vector3.up * entityInfo.collisionSettings.skinWidth);
+        Vector3 leftPoint = new Vector3(leftSize, 0, 0) + transform.position + (Vector3.left * entityInfo.collisionSettings.skinWidth);
+        Vector3 rightPoint = new Vector3(rightSize, 0, 0) + transform.position - (Vector3.right * entityInfo.collisionSettings.skinWidth);
         
         Gizmos.color = Color.green;
 
@@ -452,7 +491,7 @@ public struct EntityResizingSettings
     public float maxSize;
 
     [Space(10)] 
-    public bool canBeShrinked;
+    public bool canBeShrunk;
     public bool canBeEnlarged;
     
     [Space(10)] 
@@ -467,7 +506,7 @@ public struct EntityCollisionSettings
     public float checkRayLength;
 
     [Space(10)]
-    public Vector3 skinWidth;
+    public float skinWidth;
     
     [Space(10)]
     public LayerMask collisionMask;

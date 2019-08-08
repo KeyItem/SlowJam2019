@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 457411837}
   - component: {fileID: 2033489384076829350}
   - component: {fileID: 2033489384076829351}
+  - component: {fileID: 1675139562}
   m_Layer: 8
   m_Name: Entity_Base
   m_TagString: Entity
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 8005582388226833324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -139,13 +140,13 @@ MonoBehaviour:
       enlargeMultiplier: 3
       minSize: 0.2
       maxSize: 10
-      canBeShrinked: 1
+      canBeShrunk: 1
       canBeEnlarged: 1
       isKilledAfterMinSize: 0
       isKilledAfterMaxSize: 0
     collisionSettings:
       checkRayLength: 0.25
-      skinWidth: {x: 0, y: -0.15, z: 0}
+      skinWidth: 0.15
       collisionMask:
         serializedVersion: 2
         m_Bits: 257
@@ -159,3 +160,21 @@ MonoBehaviour:
     isCollidingOnTop: 0
     isCollidingOnLeft: 0
     isCollidingOnRight: 0
+--- !u!114 &1675139562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8005582388226833324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

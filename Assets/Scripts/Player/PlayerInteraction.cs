@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,12 +13,25 @@ public class PlayerInteraction : MonoBehaviour
     
     public EntityController selectedEntity;
     public EntityController lastSelectedEntity;
-    
+
+    [Header("Camera Interaction Attributes")]
+    private CameraFollow cameraController;
+
+    private void Start()
+    {
+        InitializeInteraction();
+    }
+
     public virtual void ManageInteraction()
     {
         hitEntityInfo = SearchForEntity();
         
         ManageHover(hitEntityInfo);
+    }
+
+    public virtual void InitializeInteraction()
+    {
+        cameraController = Camera.main.GetComponent<CameraFollow>();
     }
     
     public virtual void ManageHover(HitEntityInfo newHitEntityInfo)
@@ -66,10 +80,16 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (hitEntityInfo.entityController != selectedEntity)
             {
-                selectedEntity.UnSelectEntity();
-                hitEntityInfo.entityController.SelectEntity();
+                if (hitEntityInfo.entityController != null)
+                {
+                    selectedEntity.UnSelectEntity();
+                    cameraController.RemoveTarget(selectedEntity.transform);
+                
+                    hitEntityInfo.entityController.SelectEntity();
+                    cameraController.AddTarget(hitEntityInfo.entityController.transform);
 
-                selectedEntity = hitEntityInfo.entityController;
+                    selectedEntity = hitEntityInfo.entityController;
+                }
             }
             
             selectedEntity.Shrink();
@@ -79,7 +99,8 @@ public class PlayerInteraction : MonoBehaviour
             if (hitEntityInfo.entityController != null)
             {
                 hitEntityInfo.entityController.SelectEntity();
-                
+                cameraController.AddTarget(hitEntityInfo.entityController.transform);
+
                 selectedEntity = hitEntityInfo.entityController;
                 
                 selectedEntity.Shrink();
@@ -93,10 +114,16 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (hitEntityInfo.entityController != selectedEntity)
             {
-                selectedEntity.UnSelectEntity();
-                hitEntityInfo.entityController.SelectEntity();
+                if (hitEntityInfo.entityController != null)
+                {
+                    selectedEntity.UnSelectEntity();
+                    cameraController.RemoveTarget(selectedEntity.transform);
+                
+                    hitEntityInfo.entityController.SelectEntity();
+                    cameraController.AddTarget(hitEntityInfo.entityController.transform);
 
-                selectedEntity = hitEntityInfo.entityController;
+                    selectedEntity = hitEntityInfo.entityController;
+                }
             }
             
             selectedEntity.Enlarge();
@@ -106,7 +133,8 @@ public class PlayerInteraction : MonoBehaviour
             if (hitEntityInfo.entityController != null)
             {
                 hitEntityInfo.entityController.SelectEntity();
-                
+                cameraController.AddTarget(hitEntityInfo.entityController.transform);
+
                 selectedEntity = hitEntityInfo.entityController;
                 
                 selectedEntity.Enlarge();

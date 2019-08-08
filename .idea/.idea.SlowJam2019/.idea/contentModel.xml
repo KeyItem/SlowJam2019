@@ -8,6 +8,18 @@
       <e p="Assets" t="Include">
         <e p="Credits.txt" t="Include" />
         <e p="Plugins" t="Include">
+          <e p="QuickOutline" t="Include">
+            <e p="ReadMe.txt" t="Include" />
+            <e p="Resources" t="Include">
+              <e p="Shaders" t="Include">
+                <e p="OutlineFill.shader" t="Include" />
+                <e p="OutlineMask.shader" t="Include" />
+              </e>
+            </e>
+            <e p="Scripts" t="Include">
+              <e p="Outline.cs" t="Include" />
+            </e>
+          </e>
           <e p="Rewired" t="Include">
             <e p="Documentation" t="Include">
               <e p="licences.txt" t="Include" />

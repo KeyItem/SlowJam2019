@@ -525,6 +525,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3322974220896539674, guid: ff5cd06ef7ad31649b93b77d48bdff31,
+        type: 3}
+      propertyPath: _dontDestroyOnLoad
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff5cd06ef7ad31649b93b77d48bdff31, type: 3}
 --- !u!1 &144594087
@@ -3693,6 +3698,7 @@ MonoBehaviour:
   cameraSettings:
     moveSmoothing: 0.2
     rotationalSmoothing: 0
+    defaultPosition: {x: 0, y: 0, z: 0}
     offset: {x: 0, y: 2, z: -20}
     minZoom: 60
     maxZoom: 90
@@ -4234,21 +4240,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2033489384076829351, guid: 576420dffeed3bc41b62ee4f104cae6d,
-        type: 3}
-      propertyPath: entityInfo.collisionSettings.ceilingCheckRayLength
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2033489384076829351, guid: 576420dffeed3bc41b62ee4f104cae6d,
-        type: 3}
-      propertyPath: entityInfo.collisionSettings.groundCheckSkinWidth
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2033489384076829351, guid: 576420dffeed3bc41b62ee4f104cae6d,
-        type: 3}
-      propertyPath: entityInfo.collisionSettings.ceilingCheckSkinWidth
-      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 576420dffeed3bc41b62ee4f104cae6d, type: 3}
