@@ -166,6 +166,9 @@
           <e p="Items" t="Include">
             <e p="Item.cs" t="Include" />
           </e>
+          <e p="LevelManager" t="Include">
+            <e p="LevelManager.cs" t="Include" />
+          </e>
           <e p="Obstacles" t="Include">
             <e p="Elevator.cs" t="Include" />
             <e p="Platform.cs" t="Include" />
@@ -174,6 +177,9 @@
             <e p="PlayerController.cs" t="Include" />
             <e p="PlayerInput.cs" t="Include" />
             <e p="PlayerInteraction.cs" t="Include" />
+          </e>
+          <e p="UI" t="Include">
+            <e p="UIManager.cs" t="Include" />
           </e>
           <e p="Zones" t="Include">
             <e p="ForceZone.cs" t="Include" />
@@ -218,7 +224,7 @@
       <e p="SlowJam2019.sln" t="IncludeFlat" />
       <e p="Temp\bin" t="ExcludeRecursive" />
     </e>
-    <e p="C:\Users\Matth\.Rider2019.1\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Matth\.Rider2019.1\system\resharper-host\local\Transient\ReSharperHost\v191\SolutionCaches\_SlowJam2019.652029257.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Matth\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Matth\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_SlowJam2019.652029257.00" t="ExcludeRecursive" />
   </component>
 </project>

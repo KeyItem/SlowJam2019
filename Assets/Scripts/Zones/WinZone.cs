@@ -36,8 +36,7 @@ public class WinZone : Zone
     
     private void ActivateWinZone()
     {
-        int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
-        SceneManager.LoadScene(nextScene);
+        LevelManager.Instance.LoadNextLevel();
     }
 
     public bool CheckForWinCondition()
