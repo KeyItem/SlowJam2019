@@ -144,8 +144,7 @@ MonoBehaviour:
       isKilledAfterMinSize: 0
       isKilledAfterMaxSize: 0
     collisionSettings:
-      groundCheckRayLength: 0.2
-      ceilingCheckRayLength: 0.2
+      checkRayLength: 0.25
       skinWidth: {x: 0, y: -0.15, z: 0}
       collisionMask:
         serializedVersion: 2
@@ -156,5 +155,7 @@ MonoBehaviour:
     collisionBounds:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0, y: 0, z: 0}
-    isGrounded: 0
+    isCollidingBottom: 0
     isCollidingOnTop: 0
+    isCollidingOnLeft: 0
+    isCollidingOnRight: 0
