@@ -50,13 +50,13 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/UI/UIManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/LevelManager/LevelManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Zones/WinZone.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/MainMenuManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Credits.txt" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Camera/CameraColorChanger.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Systems/AudioController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/LevelManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Entity/EntityController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/LevelManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/MainMenuManager.cs" />
       </list>
     </option>
   </component>

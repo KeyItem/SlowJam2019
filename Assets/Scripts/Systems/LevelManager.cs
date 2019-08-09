@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour // Referenced from : http://www.unityg
     {
         int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
 
-        if (SceneManager.sceneCount <= nextScene - 1)
+        if (SceneManager.sceneCount <= nextScene)
         {
             SceneManager.LoadScene(nextScene);
         }
@@ -57,7 +57,7 @@ public class LevelManager : MonoBehaviour // Referenced from : http://www.unityg
     {
         int lastScene = SceneManager.GetActiveScene().buildIndex - 1;
 
-        if (SceneManager.sceneCount >= lastScene + 1)
+        if (SceneManager.sceneCount >= lastScene)
         {
             SceneManager.LoadScene(lastScene);
         }

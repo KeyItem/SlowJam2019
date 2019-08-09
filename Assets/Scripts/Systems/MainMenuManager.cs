@@ -15,6 +15,7 @@ public class MainMenuManager : MonoBehaviour
     public bool hasGameStarted = false;
     
     private float menuTimer;
+    
     private void Start()
     {
        InitializeMainMenu();
