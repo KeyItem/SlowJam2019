@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour // Referenced from : http://www.unitygeek.com/unity_c_singleton/
 {
@@ -61,6 +62,25 @@ public class LevelManager : MonoBehaviour // Referenced from : http://www.unityg
         {
             SceneManager.LoadScene(lastScene);
         }
+    }
+
+    public void LoadNextLevelAfterDelay(float delay)
+    {
+        int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
+
+        if (SceneManager.sceneCount <= nextScene)
+        {
+            StartCoroutine(LoadLevelAfterDelay(delay, nextScene));
+        }
+    }
+
+    public IEnumerator LoadLevelAfterDelay(float delay, int index)
+    {
+        yield return new WaitForSeconds(delay);
+        
+        LoadLevelAtIndex(index);
+
+        yield return null;
     }
 
     public void ReloadLevel()

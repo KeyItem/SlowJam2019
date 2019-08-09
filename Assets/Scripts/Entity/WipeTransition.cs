@@ -26,6 +26,8 @@ public class WipeTransition : MonoBehaviour
 
     public void StartTransition()
     {
+        transitionImage.enabled = true;
+        
         transitionProgress += Time.deltaTime * (1f / speedOfTransition);
         transitionImage.fillAmount = transitionProgress;
 
@@ -38,6 +40,8 @@ public class WipeTransition : MonoBehaviour
 
     public void TransitionRemoval()
     {
+        transitionImage.enabled = true;
+
         transitionProgress -= Time.deltaTime * (1f / speedOfTransition);
         transitionImage.fillAmount = transitionProgress;
 

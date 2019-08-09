@@ -17,6 +17,8 @@ public class MainMenuManager : MonoBehaviour
     private float menuTimer;
 
     private CameraColorChanger cameraColor;
+
+    private WipeTransition transition;
     
     private void Start()
     {
@@ -31,6 +33,8 @@ public class MainMenuManager : MonoBehaviour
         menuTimer = menuSettings.mainMenuWaitTime;
 
         cameraColor = Camera.main.GetComponent<CameraColorChanger>();
+
+        transition = GameObject.FindObjectOfType<WipeTransition>();
     }
 
     private void ManageMainMenu()
@@ -61,6 +65,8 @@ public class MainMenuManager : MonoBehaviour
             if (menuTimer <= 0f)
             {
                 StartGame();
+
+                hasGameStarted = false;
             }
         }
     }
@@ -78,7 +84,14 @@ public class MainMenuManager : MonoBehaviour
 
     private void StartGame()
     {
-        LevelManager.Instance.LoadNextLevel();
+        StartTransition();
+
+        LevelManager.Instance.LoadNextLevelAfterDelay(2f);
+    }
+
+    private void StartTransition()
+    {
+        transition.levelFinished = true;
     }
 }
 
