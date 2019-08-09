@@ -15,6 +15,8 @@ public class MainMenuManager : MonoBehaviour
     public bool hasGameStarted = false;
     
     private float menuTimer;
+
+    private CameraColorChanger cameraColor;
     
     private void Start()
     {
@@ -27,6 +29,8 @@ public class MainMenuManager : MonoBehaviour
     private void InitializeMainMenu()
     {
         menuTimer = menuSettings.mainMenuWaitTime;
+
+        cameraColor = Camera.main.GetComponent<CameraColorChanger>();
     }
 
     private void ManageMainMenu()
@@ -63,6 +67,8 @@ public class MainMenuManager : MonoBehaviour
     private void StartMenu()
     {
         hasGameStarted = true;
+
+        cameraColor.isGameStarted = true;
         
         for (int i = 0; i < entityRigidbodies.Length; i++)
         {
