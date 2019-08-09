@@ -139,7 +139,7 @@ MonoBehaviour:
       shrinkMultiplier: 3
       enlargeMultiplier: 3
       minSize: 0.2
-      maxSize: 10
+      maxSize: 500
       canBeShrunk: 1
       canBeEnlarged: 1
       isKilledAfterMinSize: 0
