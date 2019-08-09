@@ -56,6 +56,11 @@ public class PlayerController : MonoBehaviour
     private void ManageInteraction(InputInfo input)
     {
         interaction.ManageInteraction();
+
+        if (CheckForRestartInput(input))
+        {
+            LevelManager.Instance.ReloadLevel();
+        }
         
         if (CheckForShrinkInteractionInput(input))
         {
@@ -156,6 +161,16 @@ public class PlayerController : MonoBehaviour
 
         return false;
     }
+    
+    private bool CheckForRestartInput(InputInfo input)
+    {
+        if (input.ReturnCurrentButtonState("Restart"))
+        {
+            return true;
+        }
+
+        return false;
+    } 
 }
 
 [System.Serializable]

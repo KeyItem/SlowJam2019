@@ -17,9 +17,10 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Zones/Zone.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Camera/CameraFollow.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Systems/MainMenuManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Entity/EntityController_Phil.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Systems/AudioController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Entity/EntityController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelManager/LevelManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/UIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerInteraction.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerInput.cs" root0="FORCE_HIGHLIGHTING" />
@@ -28,7 +29,9 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Obstacles/Platform.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Zones/WinZone.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Zones/KillZone.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Systems/LevelManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Zones/GrowZone.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Camera/CameraColorChanger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Zones/ShrinkZone.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -40,24 +43,22 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Items/Item.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Zones/GrowZone.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Zones/ShrinkZone.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Zones/KillZone.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Camera/CameraFollow.cs" />
-        <option value="$PROJECT_DIR$/Assets/Credits.txt" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Entity/EntityController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Player/PlayerInteraction.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Zones/Zone.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UI/UIManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/LevelManager/LevelManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Zones/WinZone.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/MainMenuManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Credits.txt" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Camera/CameraColorChanger.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/AudioController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/LevelManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Entity/EntityController.cs" />
       </list>
     </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="y" value="-10" />
-    <option name="width" value="980" />
-    <option name="height" value="1040" />
   </component>
   <component name="ProjectId" id="1PAAFkugKFssOGSMgLilsY8FWOW" />
   <component name="PropertiesComponent">

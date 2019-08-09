@@ -393,7 +393,10 @@ public class EntityController : MonoBehaviour
     {
         if (entityInfo.resizingSettings.canBeShrunk)
         {
-            return true;
+            if (transform.localScale.sqrMagnitude > entityInfo.resizingSettings.minSize)
+            {
+                return true;
+            }
         }
 
         return false;
@@ -403,17 +406,20 @@ public class EntityController : MonoBehaviour
     {
         if (entityInfo.resizingSettings.canBeEnlarged)
         {
-            if (newCollision.isCollidingOnTop)
+            if (transform.localScale.sqrMagnitude < entityInfo.resizingSettings.maxSize)
             {
-                return false;
-            }
+                if (newCollision.isCollidingOnTop)
+                {
+                    return false;
+                }
 
-            if (newCollision.isCollidingOnLeft && newCollision.isCollidingOnRight)
-            {
-                return false;
+                if (newCollision.isCollidingOnLeft && newCollision.isCollidingOnRight)
+                {
+                    return false;
+                }
+                
+                return true;
             }
-
-            return true;
         }
 
         return false;

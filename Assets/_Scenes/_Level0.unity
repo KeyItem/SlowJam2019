@@ -528,11 +528,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3322974220896539674, guid: ff5cd06ef7ad31649b93b77d48bdff31,
-        type: 3}
-      propertyPath: _dontDestroyOnLoad
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff5cd06ef7ad31649b93b77d48bdff31, type: 3}
 --- !u!1 &144594087
@@ -907,7 +902,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &313354164
 Mesh:
@@ -7666,11 +7661,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3489546743523998387, guid: 967576aa7f73783489d4d6d57bab3a10,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -8
-      objectReference: {fileID: 0}
     - target: {fileID: 3489546743523998384, guid: 967576aa7f73783489d4d6d57bab3a10,
         type: 3}
       propertyPath: zoneSettings.zoneSize.x
@@ -7690,6 +7680,11 @@ PrefabInstance:
         type: 3}
       propertyPath: zoneSettings.zoneSize.y
       value: 4.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 3489546743523998387, guid: 967576aa7f73783489d4d6d57bab3a10,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 967576aa7f73783489d4d6d57bab3a10, type: 3}

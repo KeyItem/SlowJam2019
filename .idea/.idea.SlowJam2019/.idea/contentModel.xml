@@ -153,6 +153,7 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="Camera" t="Include">
+            <e p="CameraColorChanger.cs" t="Include" />
             <e p="CameraFollow.cs" t="Include" />
           </e>
           <e p="Entity" t="Include">
@@ -166,9 +167,6 @@
           <e p="Items" t="Include">
             <e p="Item.cs" t="Include" />
           </e>
-          <e p="LevelManager" t="Include">
-            <e p="LevelManager.cs" t="Include" />
-          </e>
           <e p="Obstacles" t="Include">
             <e p="Elevator.cs" t="Include" />
             <e p="Platform.cs" t="Include" />
@@ -177,6 +175,11 @@
             <e p="PlayerController.cs" t="Include" />
             <e p="PlayerInput.cs" t="Include" />
             <e p="PlayerInteraction.cs" t="Include" />
+          </e>
+          <e p="Systems" t="Include">
+            <e p="AudioController.cs" t="Include" />
+            <e p="LevelManager.cs" t="Include" />
+            <e p="MainMenuManager.cs" t="Include" />
           </e>
           <e p="UI" t="Include">
             <e p="UIManager.cs" t="Include" />

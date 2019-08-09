@@ -50,7 +50,6 @@ MonoBehaviour:
   movementSettings:
     maxMovementCooldown: 1
   moveEffictiveness: 0
-  selectedEntity: {fileID: 0}
 --- !u!114 &6899570110344548667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,6 +70,7 @@ MonoBehaviour:
   - buttonName: Move_Right
   - buttonName: Move_Up
   - buttonName: Move_Down
+  - buttonName: Restart
   inputValues:
     currentAxisInputs:
       axisInputs: []
@@ -99,3 +99,8 @@ MonoBehaviour:
     interactionMask:
       serializedVersion: 2
       m_Bits: 256
+  hitEntityInfo:
+    entityController: {fileID: 0}
+    hitPoint: {x: 0, y: 0, z: 0}
+  selectedEntity: {fileID: 0}
+  lastSelectedEntity: {fileID: 0}
